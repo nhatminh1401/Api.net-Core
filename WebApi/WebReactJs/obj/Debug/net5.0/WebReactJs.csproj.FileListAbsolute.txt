@@ -1,0 +1,8 @@
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.csproj.AssemblyReference.cache
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.AssemblyInfoInputs.cache
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.AssemblyInfo.cs
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.csproj.CoreCompileInputs.cache
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.RazorAssemblyInfo.cache
+C:\Users\minhtn\source\repos\WebApi\WebReactJs\obj\Debug\net5.0\WebReactJs.RazorAssemblyInfo.cs

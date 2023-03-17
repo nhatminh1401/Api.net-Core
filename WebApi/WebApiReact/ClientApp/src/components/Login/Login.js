@@ -13,19 +13,16 @@ function Login(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    const url = "https://localhost:5001/api/Users/login";
+    const url = "https://localhost:5001/api/Token";
     axios.post(url, { email: email.value, password: password.value }).then(response => {
       setLoading(false);
-      setUserSession(response.data.accessToken, email.value);
+      setUserSession(response.data, email.value);
       console.log (response);
       console.log (sessionStorage);
-      if(setUserSession!= null){
-        window.location.href = "/deparment";
+      if(setUserSession != null){
+        //window.location.href = "/deparment";
       }
       // props.history.push("/deparment");
-      else{
-        window.Message("Fail");
-      }
     }).catch(error => {
       setLoading(false);
       if (error.response.status === 401) setError(error.response.data.message);

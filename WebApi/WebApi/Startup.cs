@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
@@ -28,21 +30,6 @@ namespace WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        //    var builder = WebApplication.CreateBuilder();
-        //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //.AddJwtBearer(options =>
-        //{
-        //    options.TokenValidationParameters = new TokenValidationParameters
-        //    {
-        //        ValidateIssuer = true,
-        //        ValidateAudience = true,
-        //        ValidateIssuerSigningKey = true,
-        //        ValidIssuer = TokenHelper.Issuer,
-        //        ValidAudience = TokenHelper.Audience,
-        //        IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(TokenHelper.Secret))
-        //    };
-
-        //});
         }
 
         public IConfiguration Configuration { get; }
@@ -65,11 +52,91 @@ namespace WebApi
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITokenService, TokenService>();
 
+            //var builder = WebApplication.CreateBuilder(args);
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters()
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidAudience = Configuration["Jwt:Audience"],
+            //        ValidIssuer = Configuration["Jwt:Issuer"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+            //    };
+            //});
+
+            services.AddAuthentication
+                (JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //tu cap token
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+
+                        //ky vao token
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                        //(secretKeyBytes),
+                        ClockSkew = TimeSpan.Zero
+                    };
+
+                });
+
 
             //services.AddDbContext<APIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConStr")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer",
+                    Description = "Please insert JWT token into field"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+
+                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //{
+                //    In = ParameterLocation.Header,
+                //    Description = "Enter 'Bearer' [space] and then your token in the text input below.Example: 'Bearer 12345abcdef'",
+                //    Name = "Authorization",
+                //    Type = SecuritySchemeType.ApiKey
+                //});
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                //   {
+                //     new OpenApiSecurityScheme
+                //     {
+                //       Reference = new OpenApiReference
+                //       {
+                //         Type = ReferenceType.SecurityScheme,
+                //         Id = "Bearer"
+                //       }
+                //      },
+                //      new string[] { }
+                //    }
+                //  });
             });
             //Enable CORS
             services.AddCors(c =>
@@ -78,8 +145,8 @@ namespace WebApi
                   .AllowAnyHeader());
             });
         }
-       
-       
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -94,6 +161,7 @@ namespace WebApi
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();

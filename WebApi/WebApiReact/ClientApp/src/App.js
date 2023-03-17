@@ -19,13 +19,14 @@ import { getToken, removeUserSession, setUserSession } from './utils/Common';
 function App() {
 
   const [authLoading, setAuthLoading] = useState(true);
+  const [isShow, setShow] = useState(true);
 
   useEffect(() => {
     const token = getToken();
     console.log(sessionStorage.token)
     //const token = localStorage.getItem('token');
     //console.log(localStorage.getItem.getToken)
-    if (!token) {
+    if (sessionStorage.token == null) {
       return <Login/>;
     }
     else{

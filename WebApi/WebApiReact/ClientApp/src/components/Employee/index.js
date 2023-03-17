@@ -2,14 +2,28 @@ import React, { useEffect, useState } from 'react';
 import employeeApi from '../../api/employeeApi';
 import { Link } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
+
+import Popup from "reactjs-popup";
+
+import CreateEmployee from './CreateNew';
+
 //const defaultImageSrc = 'https://localhost:7246/Images/1635775567220443732.png';
 
 const Employee = () => {
 
     const [employee, setEmployee] = useState([]);
+    const [isShow, setShow] = useState(true);
 
-    useEffect(() => {
-        fetchEmployee();
+    useEffect(() => { const isShow = sessionStorage.getItem("token") == null ? true :false;
+        setShow(isShow);
+        console.log(sessionStorage)
+        if(!isShow){
+            fetchEmployee();
+            console.log(sessionStorage.getItem("token"))
+        }
+        return () => {
+            // alert ("Login first")
+        }
     }, []);
 
     const fetchEmployee = async () => {
@@ -57,6 +71,11 @@ const Employee = () => {
                                             >
                                                 <i className='bx bx-edit'></i>Sửa</Button>
                                         </Link>
+                                    </td>
+                                    <td>
+                                        <Popup modal trigger={<button>Edit</button>}>
+                                            <CreateEmployee/>
+                                        </Popup>
                                     </td>
                                     <td>
                                         <Button

@@ -23,6 +23,8 @@ namespace WebApi.Models
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserInfo> UsersInfo { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

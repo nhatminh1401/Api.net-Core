@@ -6,6 +6,7 @@ C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\WebApi.runtimeconfig.json
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\WebApi.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\WebApi.pdb
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Humanizer.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
@@ -70,4 +71,3 @@ C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\refint\WebApi.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\ref\WebApi.dll
-C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

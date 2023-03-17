@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace WebApi.Controllers
         }
         [HttpGet]
         [Route("GetEmployee")]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             return Ok(await _employee.GetEmployees());

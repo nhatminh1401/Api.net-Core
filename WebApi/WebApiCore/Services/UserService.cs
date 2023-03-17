@@ -51,6 +51,7 @@ namespace WebApiCore.Services
 
             var token = await System.Threading.Tasks.Task.Run(() => tokenService.GenerateTokensAsync(user.Id));
 
+
             return new TokenResponse
             {
                 Success = true,

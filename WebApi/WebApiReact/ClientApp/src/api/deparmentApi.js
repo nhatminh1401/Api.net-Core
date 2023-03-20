@@ -1,12 +1,12 @@
 import API from "./API";
 import { END_POINT } from "./endPoint";
 
-const url = "https://localhost:5001/api/Department/GetDepartment";
+const url = "/api/Department/GetDepartment";
 
 const deparmentApi = {
     getAllAsync: async () => {
         try {
-            const result = await API.get(`${url}`);
+            const result = await API.get(`/api/Department/GetDepartment`);
             return result;
         } catch (error) {
             console.error(error);
@@ -14,7 +14,7 @@ const deparmentApi = {
     },
     getByIdAsync: async (id) => {
         try {
-            const result = await API.get(`https://localhost:5001/api/Department/GetDepartmentByID/${id}`);
+            const result = await API.get(`/api/Department/GetDepartmentByID/${id}`);
             //const result = await API.get(`${END_POINT.DEPARMENT}/${id}`);
             return result;
         } catch (error) {
@@ -23,7 +23,7 @@ const deparmentApi = {
     },
     addAsync: async (content) => {
         try {
-            const result = await API.post(`https://localhost:5001/api/Department/AddDepartment`, content);
+            const result = await API.post(`/api/Department/AddDepartment`, content);
             return result;
         } catch (error) {
             console.error(error);
@@ -31,7 +31,7 @@ const deparmentApi = {
     },
     deleteAsync: async (departmentId) => {
         try {
-            const result = await API.delete(`https://localhost:5001/api/Department/DeleteDepartment?id=${departmentId}`);
+            const result = await API.delete(`/api/Department/DeleteDepartment?id=${departmentId}`);
             return result;
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ const deparmentApi = {
     },
     updateAsync: async (content, departmentId) => {
         try {
-            const result = await API.put(`https://localhost:5001/api/Department/UpdateDepartment`, content, departmentId);
+            const result = await API.put(`/api/Department/UpdateDepartment`, content, departmentId);
             return result;
         } catch (error) {
             console.log(error)

@@ -68,7 +68,7 @@ export default function Signin() {
               name="password"
               label="Password"
               type="password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value) }
             />
             <Button
               type="submit"

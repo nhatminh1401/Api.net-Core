@@ -26,6 +26,9 @@ function CreateEmployee() {
             alert("Da tao thanh cong!");
             navigate(-1);
         }
+        else{
+            alert("Fail");
+        }
     }
 
     return (

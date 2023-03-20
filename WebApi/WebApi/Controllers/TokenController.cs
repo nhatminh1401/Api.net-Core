@@ -13,6 +13,9 @@ using System.Linq;
 using WebApiCore.Requests;
 using WebApiCore.Responses;
 using WebApiCore.Services;
+using Microsoft.AspNetCore.Identity;
+using WebApiCore.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Controllers
 {
@@ -22,6 +25,7 @@ namespace WebApi.Controllers
     {
         public IConfiguration _configuration;
         private readonly APIDbContext _context;
+        private readonly IUserService userService;
 
         public TokenController(IConfiguration config, APIDbContext context)
         {
@@ -32,12 +36,13 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(UserInfo _userData)
         {
+            //var user = await _context.UsersInfo(_userData.Email);
             try {
                 if (_userData != null && _userData.Email != null && _userData.Password != null)
                 {
                     var user = await GetUser(_userData.Email, _userData.Password);
 
-                    if (_userData != null)
+                    if (user != null)
                     {
                         //     //create claims details based on the user information
                         //     var claims = new[] {
@@ -101,5 +106,45 @@ namespace WebApi.Controllers
         {
             return await _context.UsersInfo.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
+
+
+        [HttpPost]
+        [Route("signup")]
+        //public async Task<IActionResult> Signup(Register registerRequest)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var errors = ModelState.Values.SelectMany(x => x.Errors.Select(c => c.ErrorMessage)).ToList();
+        //        if (errors.Any())
+        //        {
+        //            return BadRequest(new TokenResponse
+        //            {
+        //                Error = $"{string.Join(",", errors)}",
+        //                ErrorCode = "S01"
+        //            });
+        //        }
+        //    }
+
+        //    return Ok(registerRequest.Email);
+        //}
+        //public async Task<IActionResult> Register(Register userModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(userModel);
+        //    }
+        //    var user = _context.UsersInfo;
+        //    var result = await userService.SignupAsync(user, userModel.Password);
+        //    if (!result.Succeeded)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            ModelState.TryAddModelError(error.Code, error.Description);
+        //        }
+        //        return View(userModel);
+        //    }
+        //    await _userManager.AddToRoleAsync(user, "Visitor");
+        //    return RedirectToAction(nameof(HomeController.Index), "Home");
+        //}
     }
 }

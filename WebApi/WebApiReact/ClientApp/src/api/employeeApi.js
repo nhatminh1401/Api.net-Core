@@ -1,7 +1,7 @@
 import API from "./API";
 import { END_POINT } from "./endPoint";
 
-const url = "https://localhost:5001/api/Employee/GetEmployee";
+const url = "/api/Employee/GetEmployee";
 
 const employeeApi = {
     getAllAsync: async () => {

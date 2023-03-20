@@ -23,7 +23,7 @@ const sidebarNavItems = [
         to: '/employee',
         section: 'employee'
     },
-    {
+    {        
         display: 'Login',
         icon: <i className='bx bx-user'></i>,
         to: '/login',

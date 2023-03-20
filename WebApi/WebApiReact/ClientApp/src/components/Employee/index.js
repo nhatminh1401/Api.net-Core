@@ -16,10 +16,11 @@ const Employee = () => {
 
     useEffect(() => { const isShow = sessionStorage.getItem("token") == null ? true :false;
         setShow(isShow);
-        console.log(sessionStorage)
+        //console.log(sessionStorage)
         if(!isShow){
             fetchEmployee();
-            console.log(sessionStorage.getItem("token"))
+            //console.log(sessionStorage.getItem("token"))
+            //console.log(setAuthentication());
         }
         return () => {
             // alert ("Login first")

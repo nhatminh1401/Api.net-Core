@@ -3,7 +3,10 @@ import departmentApi from "../../api/deparmentApi";
 import { Link } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 import { setUserSession } from "../../utils/Common";
-//const defaultImageSrc = 'https://localhost:7246/Images/1635775567220443732.png';
+//import RequestService from "../../service/request"
+import EditDeparment from './edit';
+import Popup from "reactjs-popup";
+import PopupEdit from "./popupEdit";
 
 const Deparment = () => {
     const [deparment, setDeparment] = useState([]);
@@ -17,10 +20,11 @@ const Deparment = () => {
     useEffect(() => {
         const isShow = sessionStorage.getItem("token") == null ? true :false;
         setShow(isShow);
-        console.log(sessionStorage.getItem("token"))
+        //console.log(sessionStorage.getItem("token"))
+        //console.log(setAuthentication());
         if(!isShow){
             fetchDeparment();
-            console.log(sessionStorage.getItem("token"))
+            //console.log(sessionStorage.getItem("token"))
         }
         return () => {
             // alert ("Login first")
@@ -46,6 +50,7 @@ const Deparment = () => {
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th colSpan={2}>Action</th>
                         </tr>
@@ -54,6 +59,7 @@ const Deparment = () => {
                         {deparment.map((item, key) => (
                             <tr key={key}>
                                 <td>{key + 1}</td>
+                                <td style={{ maxWidth: "120px" }}>{item.departmentId}</td>
                                 <td style={{ maxWidth: "120px" }}>{item.departmentName}</td>
                                 <td>
                                     <Link to={`/deparment/${item.departmentId}/edit`}>
@@ -62,13 +68,17 @@ const Deparment = () => {
                                         </Button>
                                     </Link>
                                 </td>
+                                {/* <td>
+                                        <Popup modal trigger={<button>Edit</button>}>
+                                            <PopupEdit/>
+                                        </Popup>
+                                </td> */}
                                 <td>
                                     <Button
                                         variant="danger"
                                         onClick={() => {
                                             let check =
-                                                window.confirm(`Ban co chac xoa id: ${item.departmentId} - ten:
-                            ${item.departmentName}?`);
+                                                window.confirm(`Ban co chac xoa id: ${item.departmentId} - ten:${item.departmentName}?`);
                                             // alert(check)
                                             if (check) deleteDeparment(item.departmentId);
                                         }}

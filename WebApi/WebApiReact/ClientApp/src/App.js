@@ -32,21 +32,17 @@ function App() {
     else{
       return<AppLayout/>;
     }
-    axios.post(`https://localhost:5001/api/Users/login`).then(response => {
-      setUserSession(response.data.accessToken, response.data.user);
-      console.log (response);
-      console.log (sessionStorage);
+    // axios.post(`https://localhost:5001/api/Users/login`).then(response => {
+    //   setUserSession(response.data.accessToken, response.data.user);
+    //   console.log (response);
+    //   console.log (sessionStorage);
 
-      setAuthLoading(true);
-    }).catch(error => {
-      removeUserSession();
-      setAuthLoading(false);
-    });
+    //   setAuthLoading(true);
+    // }).catch(error => {
+    //   removeUserSession();
+    //   setAuthLoading(false);
+    // });
   }, []);
-
-  // if (authLoading && getToken()) {
-  //   return <div className="content">Checking Authentication...</div>
-  // }
 
   return (
       <Routes>

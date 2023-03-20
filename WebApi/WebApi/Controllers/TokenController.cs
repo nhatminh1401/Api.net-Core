@@ -9,6 +9,10 @@ using System;
 using WebApiCore.Models;
 using WebApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using WebApiCore.Requests;
+using WebApiCore.Responses;
+using WebApiCore.Services;
 
 namespace WebApi.Controllers
 {
@@ -63,8 +67,8 @@ namespace WebApi.Controllers
                                  //new Claim("LastName", _userData.LastName),
                                  //new Claim("UserName", _userData.UserName),
                                  new Claim("Email", _userData.Email),
-                                    //roles
-                                    new Claim("Token",Guid.NewGuid().ToString())
+                                 //roles
+                                 new Claim("Token",Guid.NewGuid().ToString())
                                 }),
                             Expires = DateTime.UtcNow.AddMinutes(10),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secreKeyBytes), SecurityAlgorithms.HmacSha512Signature)

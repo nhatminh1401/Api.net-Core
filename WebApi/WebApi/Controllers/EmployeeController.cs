@@ -43,6 +43,7 @@ namespace WebApi.Controllers
         }
         [HttpGet]
         [Route("GetEmployeeByID/{Id}")]
+        [Authorize]
         public async Task<IActionResult> GetEmpByID(int Id)
         {
             return Ok(await _employee.GetEmployeeByID(Id));
@@ -56,6 +57,7 @@ namespace WebApi.Controllers
         //}
         [HttpPost]
         [Route("AddEmployee")]
+        [Authorize]
         public async Task<IActionResult> Post(Employee emp)
         {
             var result = await _employee.InsertEmployee(emp);
@@ -69,6 +71,7 @@ namespace WebApi.Controllers
         //test
         [HttpPost]
         [Route("testPost")]
+        [Authorize]
         public async Task<ActionResult<Employee>> PostEmp(Employee emp)
         {
             var department = dbContext.Departments.FirstOrDefault(x => x.DepartmentId == emp.DepartmentId);
@@ -86,6 +89,7 @@ namespace WebApi.Controllers
 
         [HttpPut]
         [Route("UpdateEmployee")]
+        [Authorize]
         public async Task<IActionResult> Put(Employee emp)
         {
             await _employee.UpdateEmployee(emp);
@@ -93,6 +97,7 @@ namespace WebApi.Controllers
         }
         [HttpDelete]
         [Route("DeleteEmployee")]
+        [Authorize]
         //[HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {

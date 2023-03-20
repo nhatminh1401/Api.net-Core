@@ -22,12 +22,13 @@ namespace WebApi.Controllers
             }
             [HttpGet]
             [Route("GetDepartment")]
-            public async Task<IActionResult> Get()
+            [Authorize]
+        public async Task<IActionResult> Get()
             {
                 return Ok(await _department.GetDepartment());
             }
             [HttpGet]
-            //[Authorize]
+            [Authorize]
             [Route("GetDepartmentByID/{Id}")]
             public async Task<IActionResult> GetDeptById(int Id)
             {
@@ -35,6 +36,7 @@ namespace WebApi.Controllers
             }
             [HttpPost]
             [Route("AddDepartment")]
+            [Authorize]
             public async Task<IActionResult> Post(Department dep)
             {
                 var result = await _department.InsertDepartment(dep);
@@ -45,19 +47,21 @@ namespace WebApi.Controllers
                 return Ok("Added Successfully");
             }
             [HttpPut]
+            [Authorize]
             [Route("UpdateDepartment")]
             public async Task<IActionResult> Put(Department dep)
             {
                 await _department.UpdateDepartment(dep);
                 return Ok("Updated Successfully");
             }
-        [HttpDelete]
-        //[HttpDelete("{id}")]
-        [Route("DeleteDepartment")]
-        public JsonResult Delete(int id)
-        {
-            _department.DeleteDepartment(id);
-            return new JsonResult("Deleted Successfully");
-        }
+            [HttpDelete]
+            //[HttpDelete("{id}")]
+            [Route("DeleteDepartment")]
+            [Authorize]
+            public JsonResult Delete(int id)
+            {
+                _department.DeleteDepartment(id);
+                return new JsonResult("Deleted Successfully");
+            }
     }
 }

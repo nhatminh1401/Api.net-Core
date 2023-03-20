@@ -5,6 +5,7 @@ const API = axios.create({
     timeout: 300000,
     headers: {
         "Content-Type": "application/json",
+        //"Authorization" : `Bearer ${token}`
     },
 });
 
@@ -16,5 +17,13 @@ API.interceptors.response.use(
         console.log(error);
     }
 )
+
+API.interceptors.request.use(function (config) {
+    const token = sessionStorage.getItem("token");//store.getState().session.token;
+    config.headers.Authorization = `Bearer ${token}`;
+    //console.log('>>>>>>token:',token);
+     
+    return config;
+});
 
 export default API;

@@ -1,10 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
+using WebApiCore.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.Repository
 {
@@ -16,9 +24,33 @@ namespace WebApi.Repository
             _appDBContext = context ??
                 throw new ArgumentNullException(nameof(context));
         }
-        public async Task<IEnumerable<Employee>> GetEmployees()
-        {
-            return await _appDBContext.Employees.ToListAsync();
+        public async Task<IEnumerable<UserInfo>> GetEmployees(string email)
+        {            
+            var result = (from a in _appDBContext.UsersInfo
+                          where a.Email == email select a)
+                          .ToList();
+           
+
+            //foreach (var item in _appDBContext.UsersInfo)
+            //{
+
+            //    if (item.Role == "Admin" || item.Role == "Employee")
+            //    {
+            //        return await _appDBContext.Employees.ToListAsync();
+
+            //    }
+            //    else
+            //    {
+            //        //return null;
+            //        break;
+            //    }
+            //}
+                      
+
+
+            return result;
+            //return await _appDBContext.Employees.ToListAsync();
+           
         }
         public async Task<Employee> GetEmployeeByID(int ID)
         {

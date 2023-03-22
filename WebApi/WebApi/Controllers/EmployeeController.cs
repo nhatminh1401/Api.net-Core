@@ -37,9 +37,9 @@ namespace WebApi.Controllers
         [HttpGet]
         [Route("GetEmployee")]
         [Authorize]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string email)
         {
-            return Ok(await _employee.GetEmployees());
+            return Ok(await _employee.GetEmployees(email));
         }
         [HttpGet]
         [Route("GetEmployeeByID/{Id}")]

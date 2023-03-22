@@ -14,7 +14,18 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import userApi from './../../api/axios';
+import userApi from '../../api/userApi';
+
+
+import { Container } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
+
+
+
 
 function Login(props) {
   const [loading, setLoading] = useState(false);
@@ -25,21 +36,21 @@ function Login(props) {
   
 
   // handle button click of login form
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError(null);
     setLoading(true);
+    
     const url = "https://localhost:5001/api/Token";
     
-    axios.post(url, { email: email.value, password: password.value }).then(response => {
+    axios.post(url,{ email: email.value, password: password.value  }).then(response => {
       setLoading(false);
-      setUserSession(response.data, email.value);
-      //console.log (response);
-      //console.log ("abc",sessionStorage);
+      setUserSession(response.data.accessToken, email.value, response.data.role);
+      console.log(response.data.role)
+      console.log(response.data.role)
 
       
       if(setUserSession != null){
-        window.location.href = "/deparment";
-        //props.history.push("/deparment");
+        //window.location.href = "/";
       }
     }).catch(error => {
       setLoading(false);
@@ -48,84 +59,29 @@ function Login(props) {
     });
   }
 
-
-  // //const handleRegister = () => {
-  //   //const navigate = useNavigate();
-
-  //   // const {
-  //   //     register,
-  //   //     handleSubmit,
-  //   //     formState: { errors }
-  //   // } = useForm();
-
-  //   const handleRegister = async (content) => {
-  //       var data = await userApi.addAsync(content);
-  //       console.log(data)
-  //       if (data !== "") {
-  //           alert("Da tao thanh cong!");
-  //           //navigate(-1);
-  //       }
-  //     }
-  // //}
-
+  const {
+      register,
+      handleSubmit,
+      formState: { errors }
+  } = useForm();
+    const onSubmit = async (content) => {
+      var data = await userApi.addAsync(content);
+      console.log(data)
+      if (data !== "") {
+          alert("Da tao thanh cong!");
+          //navigate(-1);
+      }
+    }
   const [justifyActive, setJustifyActive] = useState('tab1');;
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
       return;
     }
-
     setJustifyActive(value);
   };
 
-  return (
-    // <MDBContainer fluid>
-
-    //   <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-    //     <MDBCol col='12'>
-
-    //       <MDBCard className='bg-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
-    //         <MDBCardBody className='p-5 w-100 d-flex flex-column'>
-
-    //           <h2 className="fw-bold mb-2 text-center">Sign in</h2>
-    //           <p className="text-white-50 mb-3">Please enter your login and password!</p>
-
-    //           <MDBInput wrapperClass='mb-4 w-100' label='Email address' id='formControlLg' type='email' {...email} size="lg"/>
-    //           <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password'{...password} size="lg"/>
-
-    //           <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
-
-    //           <MDBBtn size='lg' onClick={handleLogin} disabled={loading}>
-    //             Login
-    //           </MDBBtn>
-    //           <hr className="my-4" />
-
-    //           <MDBBtn className="mb-2 w-100" size="lg" style={{backgroundColor: '#dd4b39'}}>
-    //             <MDBIcon fab icon="google" className="mx-2"/>
-    //             Sign in with google
-    //           </MDBBtn>
-
-    //           <MDBBtn className="mb-4 w-100" size="lg" style={{backgroundColor: '#3b5998'}}>
-    //             <MDBIcon fab icon="facebook-f" className="mx-2"/>
-    //             Sign in with facebook
-    //           </MDBBtn>
-
-
-    //           <div>
-                
-    //             <p className="mb-0">Don't have an account? <a href="/register">Sign Up</a></p>
-
-    //           </div>
-
-
-    //         </MDBCardBody>
-    //       </MDBCard>
-
-    //     </MDBCol>
-    //   </MDBRow>
-
-    // </MDBContainer>
-
+  return (    
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
@@ -179,7 +135,7 @@ function Login(props) {
           </div>
 
           <MDBBtn className="mb-4 w-100"  onClick={handleLogin} disabled={loading} >Sign in</MDBBtn>
-          <p className="text-center">Not a member? <a href="#!">Register</a></p>
+          <p className="text-center">Not a member? <a href="/Register">Register</a></p>
 
         </MDBTabsPane>
 
@@ -209,20 +165,79 @@ function Login(props) {
             <p className="text-center mt-3">or:</p>
           </div>
 
-          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email'/>
-          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password'/>
-          <MDBInput wrapperClass='mb-4' label='Confirm Password' id='form1' type='password'/>
-          <MDBInput wrapperClass='mb-4' label='First Name' id='form1' type='text'/>
-          <MDBInput wrapperClass='mb-4' label='Last Name' id='form1' type='text'/>
-          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'/>
-
-
-          <div className='d-flex justify-content-center mb-4'>
-            <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
-          </div>
-
-          <MDBBtn className="mb-4 w-100">Sign up</MDBBtn> {/*onClick={handleRegister} disabled={loading}*/}
-
+          <Container>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="text"
+                                //placeholder="Email"
+                                //defaultValue="Email"
+                                {...register('email')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>UserName</Form.Label>
+                            <Form.Control
+                                type="text"
+                                //placeholder="UserName"
+                                //defaultValue="UserName"
+                                {...register('userName')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"    
+                                rules={[
+                                  {required: true, message: 'Vui lòng nhập mật khẩu'},
+                                  {max: 16, message: 'Vui lòng không nhập quá 16 kí tự'},
+                                  {min: 6, message: 'Vui lòng không nhập dưới 6 kí tự'}
+                              ]}                            
+                                {...register('password')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>confirmPassword</Form.Label>
+                            <Form.Control
+                                type="password"
+                                rules={[
+                                    {required: true, message: 'Vui lòng nhập mật khẩu'},
+                                    {max: 16, message: 'Vui lòng không nhập quá 16 kí tự'},
+                                    {min: 6, message: 'Vui lòng không nhập dưới 6 kí tự'}
+                                ]}
+                                {...register('confirmPassword')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>firstName</Form.Label>
+                            <Form.Control
+                                type="text"
+                                //placeholder="firstname"
+                                //defaultValue="firstname"
+                                {...register('firstName')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>lastName</Form.Label>
+                            <Form.Control
+                                type="text"
+                                //placeholder="Last name"
+                                //defaultValue="Last name"
+                                {...register('lastName')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>                    
+                    </Row>
+                    <Button className="text-center mb-4 w-100" type="submit">Submit form</Button>
+                </Form>
+            </Container>
         </MDBTabsPane>
 
       </MDBTabsContent>
@@ -230,7 +245,6 @@ function Login(props) {
     </MDBContainer>
   );
 }
-
 const useFormInput = initialValue => {
   const [value, setValue] = useState(initialValue);
 

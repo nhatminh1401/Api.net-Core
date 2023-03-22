@@ -24,6 +24,7 @@ namespace WebApi.Models
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserInfo> UsersInfo { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
 
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import userApi from './../../api/axios';
+import userApi from '../../api/userApi';
 
 function Register() {
 
@@ -37,13 +37,23 @@ function Register() {
             <Container>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Row className="mb-3">
-                        <Form.Group as={Col} md="12" controlId="validationCustom01">
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Email"
-                                defaultValue="Email"
+                                // placeholder="Email"
+                                // defaultValue="Email"
                                 {...register('email')}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <Form.Label>UserName</Form.Label>
+                            <Form.Control
+                                type="text"
+                                //placeholder="Address"
+                                //defaultValue="Address"
+                                {...register('userName')}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
@@ -76,8 +86,8 @@ function Register() {
                             <Form.Label>firstName</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="firstname"
-                                defaultValue="firstname"
+                               // placeholder="firstname"
+                                // defaultValue="firstname"
                                 {...register('firstName')}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -86,29 +96,9 @@ function Register() {
                             <Form.Label>lastName</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Last name"
-                                defaultValue="Last name"
+                                //placeholder="Last name"
+                                // defaultValue="Last name"
                                 {...register('lastName')}
-                            />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="validationCustom01">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Phone"
-                                defaultValue="Phone"
-                                {...register('phone')}
-                            />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="validationCustom01">
-                            <Form.Label>Adddress</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Address"
-                                defaultValue="Address"
-                                {...register('address')}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>

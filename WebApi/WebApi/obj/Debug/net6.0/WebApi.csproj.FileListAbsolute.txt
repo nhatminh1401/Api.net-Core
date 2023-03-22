@@ -7,6 +7,7 @@ C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\WebApi.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\WebApi.pdb
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Humanizer.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
@@ -15,6 +16,8 @@ C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.EntityFramework
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Exchange.WebServices.Auth.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Exchange.WebServices.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Identity.Client.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
@@ -71,3 +74,20 @@ C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\refint\WebApi.dll
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\minhtn\Desktop\WebApi\WebApi\obj\Debug\net6.0\ref\WebApi.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\EntityFramework.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNet.Identity.Core.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Graph.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Graph.Core.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Abstractions.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Authentication.Azure.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Http.HttpClientLibrary.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Form.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Json.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Text.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\System.Memory.Data.dll
+C:\Users\minhtn\Desktop\WebApi\WebApi\bin\Debug\net6.0\Tavis.UriTemplates.dll

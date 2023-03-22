@@ -51,6 +51,7 @@ namespace WebApi
             //services.AddScoped<ITokenService, TokenService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IUserTokenService, UserTokenService>();
 
             //var builder = WebApplication.CreateBuilder(args);
 

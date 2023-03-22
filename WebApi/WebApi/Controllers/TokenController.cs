@@ -9,85 +9,76 @@ using System;
 using WebApiCore.Models;
 using WebApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using WebApiCore.Requests;
-using WebApiCore.Responses;
-using WebApiCore.Services;
-using Microsoft.AspNetCore.Identity;
 using WebApiCore.Interfaces;
-using Microsoft.AspNetCore.Http;
+using System.Diagnostics.Eventing.Reader;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using WebApi.IRepository;
+using WebApiCore.Responses;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : Controller
+    public class TokenController : BaseApiController
     {
         public IConfiguration _configuration;
         private readonly APIDbContext _context;
-        private readonly IUserService userService;
+        private readonly IUserTokenService _userTokenService;
+        private readonly IEmployeeRepository _userService;
 
-        public TokenController(IConfiguration config, APIDbContext context)
+        public TokenController(IConfiguration config, APIDbContext context, IUserTokenService userTokenService, IEmployeeRepository userService )
         {
             _configuration = config;
-            _context = context;
+            _context = context ??
+                throw new ArgumentNullException(nameof(context));
+            _userTokenService = userTokenService;
+            _userService = userService;
         }
-
+        [HttpGet]
+        [Authorize]
+        public async Task<IEnumerable<UserInfo>> GetUserInfo()
+        {
+            return await _context.UsersInfo.ToListAsync();
+        }
         [HttpPost]
-        public async Task<IActionResult> Post(UserInfo _userData)
+        public async Task<IActionResult> Post(LoginRequest _userData)
         {
             //var user = await _context.UsersInfo(_userData.Email);
             try {
                 if (_userData != null && _userData.Email != null && _userData.Password != null)
                 {
                     var user = await GetUser(_userData.Email, _userData.Password);
-
-                    if (user != null)
+                    //if (user == null)
+                    //{
+                    //    return NotFound("User pass khong hop le");
+                    //}
+                    var result = _userService.GetEmployees(_userData.Email);
+                    var jwtTokenHandler = new JwtSecurityTokenHandler();
+                    var secreKeyBytes = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+                    var tokenDescription = new SecurityTokenDescriptor
                     {
-                        //     //create claims details based on the user information
-                        //     var claims = new[] {
-                        // new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-                        // new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        // new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                        // new Claim("Id", _userData.UserId.ToString()),
-                        // new Claim("FirstName", _userData.FirstName),
-                        // new Claim("LastName", _userData.LastName),
-                        // new Claim("UserName", _userData.UserName),
-                        // new Claim("Email", _userData.Email)
-                        //};
+                        Subject = new ClaimsIdentity(new[]{
 
-                        //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-
-                        //     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                        //     var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
-
-                        var jwtTokenHandler = new JwtSecurityTokenHandler();
-                        var secreKeyBytes = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
-                        var tokenDescription = new SecurityTokenDescriptor
-                        {
-                            Subject = new ClaimsIdentity(new[]{
-                                 //new Claim("Id", _userData.UserId.ToString()),
-                                 //new Claim("FirstName", _userData.FirstName),
-                                 //new Claim("LastName", _userData.LastName),
-                                 //new Claim("UserName", _userData.UserName),
                                  new Claim("Email", _userData.Email),
                                  //roles
                                  new Claim("Token",Guid.NewGuid().ToString())
                                 }),
-                            Expires = DateTime.UtcNow.AddMinutes(10),
-                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secreKeyBytes), SecurityAlgorithms.HmacSha512Signature)
+                        Expires = DateTime.UtcNow.AddMinutes(10),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secreKeyBytes), SecurityAlgorithms.HmacSha512Signature)
 
-                        };
-                        var token = jwtTokenHandler.CreateToken(tokenDescription);
-                        var accessToken = jwtTokenHandler.WriteToken(token);
-                        return Ok(accessToken);
-                        //return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-                    }
-                    else
-                    {
-                        return BadRequest("Invalid User");
-                    }
+                    };
+                    var token = jwtTokenHandler.CreateToken(tokenDescription);
+                    var accessToken = jwtTokenHandler.WriteToken(token);
+                    LoginRes lg = new LoginRes();
+                    lg.AccessToken = accessToken;
+                    ////lg.RefreshToken = "";
+                    lg.role = result.Result;
+
+                    //return Ok(accessToken);
+                    return Ok(lg);
+                                       
                 }
                 else
                 {
@@ -98,7 +89,6 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-                
             
         }
 
@@ -110,41 +100,16 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Route("signup")]
-        //public async Task<IActionResult> Signup(Register registerRequest)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        var errors = ModelState.Values.SelectMany(x => x.Errors.Select(c => c.ErrorMessage)).ToList();
-        //        if (errors.Any())
-        //        {
-        //            return BadRequest(new TokenResponse
-        //            {
-        //                Error = $"{string.Join(",", errors)}",
-        //                ErrorCode = "S01"
-        //            });
-        //        }
-        //    }
-
-        //    return Ok(registerRequest.Email);
-        //}
-        //public async Task<IActionResult> Register(Register userModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(userModel);
-        //    }
-        //    var user = _context.UsersInfo;
-        //    var result = await userService.SignupAsync(user, userModel.Password);
-        //    if (!result.Succeeded)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            ModelState.TryAddModelError(error.Code, error.Description);
-        //        }
-        //        return View(userModel);
-        //    }
-        //    await _userManager.AddToRoleAsync(user, "Visitor");
-        //    return RedirectToAction(nameof(HomeController.Index), "Home");
-        //}
+        public async Task<IActionResult> Signup(Register signupRequest)
+        {
+            var origin = Request.Headers["origin"];
+            return Ok(await _userTokenService.SignupAsync(signupRequest, origin));
+        }
+        [HttpDelete]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            return Ok();
+        }
     }
 }

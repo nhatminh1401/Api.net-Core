@@ -14,7 +14,7 @@ const employeeApi = {
     },
     getByIdAsync: async (id) => {
         try {
-            const result = await API.get(`https://localhost:5001/api/Employee/GetEmployeeByID/${id}`);
+            const result = await API.get(`/api/Employee/GetEmployeeByID/${id}`);
             //const result = await API.get(`${END_POINT.DEPARMENT}/${id}`);
             return result;
         } catch (error) {
@@ -23,7 +23,7 @@ const employeeApi = {
     },
     addAsync: async (content) => {
         try {
-            const result = await API.post(`https://localhost:5001/api/Employee/AddEmployee`, content);
+            const result = await API.post(`/api/Employee/AddEmployee`, content);
             return result;
         } catch (error) {
             console.error(error);
@@ -31,7 +31,7 @@ const employeeApi = {
     },
     deleteAsync: async (employeeID) => {
         try {
-            const result = await API.delete(`https://localhost:5001/api/Employee/DeleteEmployee?id=${employeeID}`);
+            const result = await API.delete(`/api/Employee/DeleteEmployee?id=${employeeID}`);
             return result;
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ const employeeApi = {
     },
     updateAsync: async (content) => {
         try {
-            const result = await API.put(`https://localhost:5001/api/Employee/UpdateEmployee`, content);
+            const result = await API.put(`/api/Employee/UpdateEmployee`, content);
             return result;
         } catch (error) {
             console.log(error)

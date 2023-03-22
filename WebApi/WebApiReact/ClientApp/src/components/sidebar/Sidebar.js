@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.scss';
-import React from 'react'
+import React from 'react';
+import { getUser } from '../../utils/Common';
 
 const sidebarNavItems = [
     {
@@ -29,6 +30,12 @@ const sidebarNavItems = [
         to: '/login',
         section: 'login'
     },
+    // {        
+    //     display: 'Logout',
+    //     icon: <i className='bx bx-user'></i>,
+    //     to: '/logout',
+    //     section: 'logout'
+    // },
 ]
 
 const Sidebar = () => {
@@ -37,6 +44,7 @@ const Sidebar = () => {
     const sidebarRef = useRef();
     const indicatorRef = useRef();
     const location = useLocation();
+    const user = getUser();
 
     useEffect(() => {
         setTimeout(() => {
@@ -52,11 +60,10 @@ const Sidebar = () => {
         const activeItem = sidebarNavItems.findIndex(item => item.section === curPath);
         setActiveIndex(curPath.length === 0 ? 0 : activeItem);
     }, [location]);
-    
     return (
         <div className='sidebar'>
             <div className="sidebar__logo">
-                ADMIN
+                Welcome  {user}
             </div>
             <div ref={sidebarRef} className="sidebar__menu">
                 <div

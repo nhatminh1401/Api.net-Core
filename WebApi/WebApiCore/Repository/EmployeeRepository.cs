@@ -24,32 +24,14 @@ namespace WebApi.Repository
             _appDBContext = context ??
                 throw new ArgumentNullException(nameof(context));
         }
-        public async Task<IEnumerable<UserInfo>> GetEmployees(string email)
+        public async Task<IEnumerable<Employee>> GetEmployees(string email)
         {            
             var result = (from a in _appDBContext.UsersInfo
-                          where a.Email == email select a)
+                          /*where a.Email == email*/ select a)
                           .ToList();
            
 
-            //foreach (var item in _appDBContext.UsersInfo)
-            //{
-
-            //    if (item.Role == "Admin" || item.Role == "Employee")
-            //    {
-            //        return await _appDBContext.Employees.ToListAsync();
-
-            //    }
-            //    else
-            //    {
-            //        //return null;
-            //        break;
-            //    }
-            //}
-                      
-
-
-            return result;
-            //return await _appDBContext.Employees.ToListAsync();
+            return await _appDBContext.Employees.ToListAsync();
            
         }
         public async Task<Employee> GetEmployeeByID(int ID)

@@ -17,12 +17,17 @@ const sidebarNavItems = [
         to: '/deparment',
         section: 'deparment'
     },
-
     {
         display: 'Employee',
         icon: <i className='bx bx-user'></i>,
         to: '/employee',
         section: 'employee'
+    },
+    {
+        display: 'User',
+        icon: <i className='bx bx-user'></i>,
+        to: '/user',
+        section: 'user'
     },
     {        
         display: 'Login',

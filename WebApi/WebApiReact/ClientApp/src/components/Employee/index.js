@@ -7,6 +7,7 @@ import Popup from "reactjs-popup";
 
 import CreateEmployee from './CreateNew';
 import userApi from '../../api/userApi';
+import { setUserSession } from '../../utils/Common';
 
 //const defaultImageSrc = 'https://localhost:7246/Images/1635775567220443732.png';
 
@@ -20,26 +21,28 @@ const Employee = () => {
     //     setUserRole(result);
     // }
 
-    useEffect(() => { const isShow = sessionStorage.getItem("role") == null ? true :false;
+    useEffect(() => { const isShow = sessionStorage.getItem("token") == null ? true : false; //const isShow = sessionStorage.getItem("role") == "Admin" /*|| sessionStorage.getItem("role") == "Employee" */ ? true :false;
         setShow(isShow);
-        //console.log(sessionStorage.getItem("token"));
-
+        //fetchEmployee();
+        const role = sessionStorage.getItem("role");
+        console.log(role);
         if(!isShow){
-            //console.log (userrole)
-            // if(.role == "Admin" && .role =="Employee")
-            // {
-                  fetchEmployee();
-            // }
-            //console.log(sessionStorage.getItem("token"))
-            //console.log(setAuthentication());
+            if (role == '"Admin"' || role == '"Employee"'){
+                fetchEmployee();
+            }
+            else{
+                alert("Không có quyền truy cập");
+            }
         }
         return () => {
-            // alert ("Login first")
+             //alert ("Login first");
         }
     }, []);
 
     const fetchEmployee = async () => {
-        const result = await employeeApi.getAllAsync()
+        // var contentsq = sessionStorage.getItem("email");
+        // console.log(contentsq)
+        const result = await employeeApi.getAllAsync();
         setEmployee(result);
     }
     const deleteEmployee = async (id) => {
@@ -49,7 +52,7 @@ const Employee = () => {
     
     return (
         <>
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+        {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
         <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
@@ -75,7 +78,7 @@ const Employee = () => {
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
 
             <div style={{ padding: '20px 50px 0px 0px' }}>

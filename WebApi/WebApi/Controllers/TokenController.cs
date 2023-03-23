@@ -54,7 +54,7 @@ namespace WebApi.Controllers
                     //{
                     //    return NotFound("User pass khong hop le");
                     //}
-                    var result = _userService.GetEmployees(_userData.Email);
+                    var result = _userTokenService.GetUsersInfoAsync(_userData.Email);
                     var jwtTokenHandler = new JwtSecurityTokenHandler();
                     var secreKeyBytes = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
                     var tokenDescription = new SecurityTokenDescriptor
@@ -65,7 +65,7 @@ namespace WebApi.Controllers
                                  //roles
                                  new Claim("Token",Guid.NewGuid().ToString())
                                 }),
-                        Expires = DateTime.UtcNow.AddMinutes(10),
+                        Expires = DateTime.UtcNow.AddMinutes(30),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secreKeyBytes), SecurityAlgorithms.HmacSha512Signature)
 
                     };
@@ -105,11 +105,36 @@ namespace WebApi.Controllers
             var origin = Request.Headers["origin"];
             return Ok(await _userTokenService.SignupAsync(signupRequest, origin));
         }
-        [HttpDelete]
-        [Route("logout")]
-        public async Task<IActionResult> Logout()
+        //[HttpDelete]
+        //[Route("logout")]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    return Ok();
+        //}
+
+        [HttpPut]
+        [Route("UpdateUser")]
+        [Authorize]
+        public async Task<IActionResult> Put(UserInfo userInfo)
         {
-            return Ok();
+            await _userTokenService.UpdateUserInfo(userInfo);
+            return Ok("Updated Successfully");
+        }
+        [HttpGet]
+        [Route("{Id}")]
+        [Authorize]
+        public async Task<IActionResult> GetEmpByID(int Id)
+        {
+            return Ok(await _userTokenService.GetUserByID(Id));
+        }
+        [HttpDelete]
+        [Route("DeleteUser")]
+        [Authorize]
+        //[HttpDelete("{id}")]  
+        public JsonResult Delete(int id)
+        {
+            var result = _userTokenService.DeleteUser(id);
+            return new JsonResult("Deleted Successfully");
         }
     }
 }

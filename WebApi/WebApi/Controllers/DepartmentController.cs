@@ -23,7 +23,7 @@ namespace WebApi.Controllers
             [HttpGet]
             [Route("GetDepartment")]
             [Authorize]
-        public async Task<IActionResult> Get()
+            public async Task<IActionResult> Get()
             {
                 return Ok(await _department.GetDepartment());
             }

@@ -32,6 +32,15 @@ namespace WebApiCore.Services
             }
             return null;
         }
+
+        public async Task<IEnumerable<UserInfo>> GetUsersInfoAsync(string email)
+        {
+            var result = (from a in tasksDbContext.UsersInfo
+                          where a.Email == email
+                          select a)
+                          .ToList();
+            return result;
+        }
         public async Task<SignupResponse> SignupAsync(Register signupRequest, string origin)
         {
             var existingUser = await tasksDbContext.UsersInfo.SingleOrDefaultAsync(user => user.Email == signupRequest.Email);
@@ -95,27 +104,33 @@ namespace WebApiCore.Services
             };
         }
 
-        //public async Task<LogoutResponse> LogoutAsync(LoginRequest loginRequest)
-        //{
-        //    var refreshToken = await tasksDbContext.UsersInfo.FirstOrDefaultAsync(o => o.UserName == userId);
 
-        //    if (refreshToken == null)
-        //    {
-        //        return new LogoutResponse { Success = true };
-        //    }
+        public async Task<UserInfo> UpdateUserInfo(UserInfo userInfo)
+        {
+            tasksDbContext.Entry(userInfo).State = EntityState.Modified;
+            await tasksDbContext.SaveChangesAsync();
+            return userInfo;
+        }
 
-        //    tasksDbContext.UsersInfo.Remove(refreshToken);
-
-        //    var saveResponse = await tasksDbContext.SaveChangesAsync();
-
-        //    if (saveResponse >= 0)
-        //    {
-        //        return new LogoutResponse { Success = true };
-        //    }
-
-        //    return new LogoutResponse { Success = false, Error = "Unable to logout user", ErrorCode = "L04" };
-
-        //}
-
+        public async Task<UserInfo> GetUserByID(int ID)
+        {
+            return await tasksDbContext.UsersInfo.FindAsync(ID);
+        }
+        public bool DeleteUser(int ID)
+        {
+            bool result = false;
+            var user = tasksDbContext.UsersInfo.Find(ID);
+            if (user != null)
+            {
+                tasksDbContext.Entry(user).State = EntityState.Deleted;
+                tasksDbContext.SaveChanges();
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
     }
 }

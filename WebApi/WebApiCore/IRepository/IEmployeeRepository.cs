@@ -9,7 +9,7 @@ namespace WebApi.IRepository
 {
     public interface IEmployeeRepository
     {
-        Task<IEnumerable<UserInfo>> GetEmployees(string email);
+        Task<IEnumerable<Employee>> GetEmployees(string email);
         Task<Employee> GetEmployeeByID(int ID);
         Task<Department> GetEmployeeDeparByID(int ID);
         Task<Employee> InsertEmployee(Employee objEmployee);

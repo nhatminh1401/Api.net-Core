@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import departmentApi from "../../api/deparmentApi";
 import { Link } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
-import { setUserSession } from "../../utils/Common";
+import { Table, Button, Alert } from "react-bootstrap";
 //import RequestService from "../../service/request"
-import EditDeparment from './edit';
-import Popup from "reactjs-popup";
-import PopupEdit from "./popupEdit";
 
 const Deparment = () => {
     const [deparment, setDeparment] = useState([]);
@@ -20,12 +16,17 @@ const Deparment = () => {
     useEffect(() => {
         const isShow = sessionStorage.getItem("token") == null ? true :false;
         setShow(isShow);
-        //console.log(sessionStorage.getItem("token"))
-        //console.log(setAuthentication());
+        const role = sessionStorage.getItem("role");
+        //console.log(sessionStorage.getItem("role"));
         if(!isShow){
-            fetchDeparment();
-            //console.log(sessionStorage.getItem("token"))
+            if (role == '"Admin"' || role == '"Deparment"'){
+                fetchDeparment();
+            }
+            else{
+                alert("Không có quyền truy cập")
+            }
         }
+
         return () => {
             // alert ("Login first")
         }

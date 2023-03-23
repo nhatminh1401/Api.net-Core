@@ -45,8 +45,19 @@ function Login(props) {
     axios.post(url,{ email: email.value, password: password.value  }).then(response => {
       setLoading(false);
       setUserSession(response.data.accessToken, email.value, response.data.role);
-      console.log(response.data.role)
-      console.log(response.data.role)
+      console.log(response.data)
+        let a = response.data.role
+        const iterator = a.values();
+        for (const value of iterator) {
+          console.log(value.role);
+          console.log(value.role);
+        }
+        // const userrole = iterator.value.role;
+        // console.log(userrole);
+         console.log("áđấ")
+      
+        
+
 
       
       if(setUserSession != null){

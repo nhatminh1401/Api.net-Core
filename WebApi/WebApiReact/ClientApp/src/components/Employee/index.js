@@ -20,9 +20,9 @@ const Employee = () => {
     //     setUserRole(result);
     // }
 
-    useEffect(() => { const isShow = sessionStorage.getItem("token") == null ? true :false;
+    useEffect(() => { const isShow = sessionStorage.getItem("role") == null ? true :false;
         setShow(isShow);
-        //console.log(sessionStorage)
+        //console.log(sessionStorage.getItem("token"));
 
         if(!isShow){
             //console.log (userrole)

@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import userApi from '../../api/userApi';
 import { Link } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
+import { getToken, getRole } from '../../utils/Common';
 
 
 const User = () => {
 
     const [user, setUser] = useState([]);
     const [isShow, setShow] = useState(true);
+    const token = getToken();
+    const role = getRole();
    
 
-    useEffect(() => { const isShow = sessionStorage.getItem("token") == null ? true : false; //const isShow = sessionStorage.getItem("role") == "Admin" /*|| sessionStorage.getItem("role") == "User" */ ? true :false;
+    useEffect(() => { const isShow = token == null ? true : false; //const isShow = sessionStorage.getItem("role") == "Admin" /*|| sessionStorage.getItem("role") == "User" */ ? true :false;
         setShow(isShow);
-        //fetchUser();
-        const role = sessionStorage.getItem("role");
-        //console.log(role);
         if(!isShow){
             if (role == "1"){
                 fetchUser();
             }
             else{
-                alert("Không có quyền truy cập")
+                alert("Không có quyền truy cập!")
             }
         }
         return () => {
@@ -29,8 +29,7 @@ const User = () => {
     }, []);
 
     const fetchUser = async () => {
-        // var contentsq = sessionStorage.getItem("email");
-        // console.log(contentsq)
+       
         const result = await userApi.getAllAsync();
         setUser(result);
     }

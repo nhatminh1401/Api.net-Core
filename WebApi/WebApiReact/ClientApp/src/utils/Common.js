@@ -7,7 +7,15 @@ export const getUser = () => {
   
   // return the token from the session storage
   export const getToken = () => {
-    return sessionStorage.getItem('token') || null;
+    const getToken = sessionStorage.getItem("token");
+    if (getToken) return getToken;
+    else return null;
+  }
+
+  export const getRole = () => {
+    const userRole = sessionStorage.getItem('role');
+    if (userRole) return JSON.parse(userRole);
+    else return null;
   }
   
   // remove the token and user from the session storage

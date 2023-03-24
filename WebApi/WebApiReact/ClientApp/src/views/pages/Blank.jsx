@@ -16,12 +16,14 @@ const Blank = () => {
     if (sessionStorage.getItem("token")!= null)
     {
         return <div>
-            <h5>HELLO: {sessionStorage.getItem("username")} </h5>
+            <h5>HELLO: {user} </h5>
             <Button  onClick={handleLogout} > Logout </Button>
         </div>
-                
-    }else{
-    return <div><h1>HELLO  </h1></div>
+              
+    }
+    else
+    {
+        return <div><h1>HELLO  </h1></div>
     }
 };
 

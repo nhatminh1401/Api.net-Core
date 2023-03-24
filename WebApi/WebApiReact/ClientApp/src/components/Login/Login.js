@@ -53,8 +53,9 @@ function Login(props) {
         const userrole = value.roleId;
 
         const usernames = value.userName;
-        console.log(userrole);
+        //console.log(userrole);
         setUserSession(response.data.accessToken, email.value, userrole, usernames);
+        console.log(setUserSession)
       }      
 
       if(setUserSession != null){

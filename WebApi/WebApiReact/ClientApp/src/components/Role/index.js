@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import roleApi from "../../api/roleApi";
 import { Link } from "react-router-dom";
 import { Table, Button, Alert } from "react-bootstrap";
-//import RequestService from "../../service/request"
+import { getToken } from "../../utils/Common";
 
 const Role = () => {
     const [role, setRole] = useState([]);
     const [isShow, setShow] = useState(true);
+    const token = getToken();
 
     const fetchRole = async () => {
         const result = await roleApi.getAllAsync();
@@ -14,7 +15,7 @@ const Role = () => {
     };
 
     useEffect(() => {
-        const isShow = sessionStorage.getItem("token") == null ? true :false;
+        const isShow = token == null ? true :false;
         setShow(isShow);
         const role = sessionStorage.getItem("role");
         //console.log(sessionStorage.getItem("role"));if (role == '"Admin"' || role == '"Role"')

@@ -1,9 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
-    //'https://localhost:44318/'
-    //'https://localhost:5001/'
-    // 'https://asset-management-team3-group1.azurewebsites.net/'
     baseURL: 'https://localhost:5001/'
 }
 

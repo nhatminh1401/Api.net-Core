@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import departmentApi from "../../api/deparmentApi";
 import { Link } from "react-router-dom";
 import { Table, Button, Alert } from "react-bootstrap";
-//import RequestService from "../../service/request"
+
+import { getToken, getRole } from '../../utils/Common';
 
 const Deparment = () => {
     const [deparment, setDeparment] = useState([]);
     const [isShow, setShow] = useState(true);
+    const token = getToken();
+    const role = getRole();
 
     const fetchDeparment = async () => {
         const result = await departmentApi.getAllAsync();
@@ -14,9 +17,9 @@ const Deparment = () => {
     };
 
     useEffect(() => {
-        const isShow = sessionStorage.getItem("token") == null ? true :false;
+        const isShow = token == null ? true :false;
         setShow(isShow);
-        const role = sessionStorage.getItem("role");
+        //const role = sessionStorage.getItem("role");
         //console.log(sessionStorage.getItem("role"));if (role == '"Admin"' || role == '"Deparment"')
         if(!isShow){
             if (role == "1" || role == "2"){

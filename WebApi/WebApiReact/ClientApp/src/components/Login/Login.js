@@ -50,14 +50,15 @@ function Login(props) {
       for (const value of iterator) 
       {
         console.log(value);
-        const userrole = value.role;
+        const userrole = value.roleId;
+
         const usernames = value.userName;
         console.log(userrole);
         setUserSession(response.data.accessToken, email.value, userrole, usernames);
       }      
 
       if(setUserSession != null){
-        //window.location.href = "/";
+        window.location.href = "/";
       }
     }).catch(error => {
       setLoading(false);

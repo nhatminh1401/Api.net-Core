@@ -106,7 +106,7 @@ function EditEmployee() {
                   id="input-category"
                   type="select"
                   {...register("departmentId")}
-                  defaultValue=""
+                  //defaultValue={departmentName}
                   //onChange={handleChange}
                 >
                   {productTypes.map((productType, key) => (

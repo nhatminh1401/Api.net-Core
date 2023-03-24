@@ -29,5 +29,39 @@ namespace WebApiCore.Services
             }
             
         }
+        public async Task<Role> GetRoleByID(int ID)
+        {
+            return await _appDBContext.Roles.FindAsync(ID);
+        }
+
+        public async Task<Role> UpdateRole(Role role)
+        {
+            _appDBContext.Entry(role).State = EntityState.Modified;
+            await _appDBContext.SaveChangesAsync();
+            return role;
+        }
+        public async Task<Role> InsertRole(Role role)
+        {
+            _appDBContext.Roles.Add(role);
+            await _appDBContext.SaveChangesAsync();
+            return role;
+        }
+
+        public bool DeleteRole(int ID)
+        {
+            bool result = false;
+            var role = _appDBContext.Roles.Find(ID);
+            if (role != null)
+            {
+                _appDBContext.Entry(role).State = EntityState.Deleted;
+                _appDBContext.SaveChanges();
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
     }
 }

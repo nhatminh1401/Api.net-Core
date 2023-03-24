@@ -16,23 +16,41 @@ function EditUser() {
   var { id } = useParams();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState([]);
+  //const [user, setUser] = useState([]);
   const [role, setUserRole] = useState([]);
+  const [user, setEmployee] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  // const fetchData = async () => {
+  //   const user = await userApi.getByIdAsync(id);
+  //   const role = await roleApi.getAllAsync();
+  //   //console.log(role);
+  //   let a = role.values();
+  //   for (const value of a) 
+  //     {
+  //       //const userrole = value.role;
+  //       const usernames = value.roleName;
+  //       const userrolename = value;
+  //       console.log(userrolename);
+  //       //console.log(usernames);
+  //       setUserRole(usernames, userrolename);
+  //     }      
+  //   setUser(user);
+   
+  // }
   const fetchData = async () => {
-    const user = await userApi.getByIdAsync(id);
-    const role = await roleApi.getAllAsync();
-    console.log(role);
-    setUser(user);
+    const role = await roleApi.getAllAsync()
     setUserRole(role);
+    const user = await userApi.getByIdAsync(id)
+    console.log(user);
+    setEmployee(user);
   }
 
   // const options = [
-  //   { value: 'chocolate', label: 'Chocolate' },
+  //   { value: 'usernames', label: 'Chocolate' },
   //   { value: 'strawberry', label: 'Strawberry' },
   //   { value: 'vanilla', label: 'Vanilla' }
   // ]
@@ -48,7 +66,7 @@ function EditUser() {
   } = useForm();
 
   const onSubmit = async (content) => {
-    content.userId = id
+    content.userId = id;
     var result = await userApi.updateAsync(content);
     console.log(result);
     if(result !== 0) {
@@ -120,24 +138,27 @@ function EditUser() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Role</Form.Label>
-              <Form.Control
-                type="text"
-                defaultValue={user.role}
-                {...register('role')}
-              />
-                <Form.Select 
-                    defaultValue={user.role}
-                >
-                    <option>{user.role}</option>
-                    <option>{role.RoleName}</option>
-                    <option>{role.role}</option>
-                    <option>{role.role}</option>
-                </Form.Select>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
+           
           </Row>
+          <Row className="mb-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom04">
+                <Form.Label>Role</Form.Label>
+                <select
+                  className="form-control-alternative form-control"
+                  id="input-category"
+                  type="select"
+                  {...register("roleId")}
+                  defaultValue=""
+                  //onChange={handleChange}
+                >
+                  {role.map((roleType, key) => (
+                    <option key={key} value={roleType.roleId}>
+                      {roleType.roleName}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
+            </Row>
           <Button type="submit">Submit form</Button>
         </Form>
       </Container>

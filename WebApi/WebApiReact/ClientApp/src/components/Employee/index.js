@@ -27,7 +27,7 @@ const Employee = () => {
         const role = sessionStorage.getItem("role");
         console.log(role);
         if(!isShow){
-            if (role == '"Admin"' || role == '"Employee"'){
+            if (role == "1" || role == "3"){
                 fetchEmployee();
             }
             else{

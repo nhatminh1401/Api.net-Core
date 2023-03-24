@@ -15,6 +15,10 @@ import Signin from './components/Login/Signin';
 import User from './components/User/index';
 import EditUser from './components/User/edit';
 import CreateUser from './components/User/createUser';
+import Role from './components/Role/index';
+import EditRole from './components/Role/editRole';
+import CreateRole from './components/Role/createRole';
+
 
 function App() {
 
@@ -34,10 +38,15 @@ function App() {
           <Route path='/login' element={<Login />}></Route>   
           <Route path='/register' element={<Register />}></Route>   
           <Route path='/signin' element={<Signin />}></Route> 
-
+          
           <Route path='/user' element={<User />}></Route>
           <Route path='/user/:id/edit' element={<EditUser />}></Route> 
           <Route path='/user/create' element={<CreateUser />}></Route> 
+
+          <Route path='/role' element={<Role />}></Route> 
+          <Route path='/role/:id/edit' element={<EditRole />}></Route> 
+          <Route path='/role/create' element={<CreateRole />}></Route> 
+
                 
         </Route>
         </Route>

@@ -8,9 +8,9 @@ namespace WebApiCore.Interfaces
     public interface IRoleService
     {
         Task<IEnumerable<Role>> Get();
-        //Task<Department> GetDepartmentByID(int ID);
-        //Task<Department> InsertDepartment(Department objDepartment);
-        //Task<Department> UpdateDepartment(Department objDepartment);
-        //bool DeleteDepartment(int ID);
+        Task<Role> GetRoleByID(int ID);
+        Task<Role> InsertRole(Role role);
+        Task<Role> UpdateRole(Role role);
+        bool DeleteRole(int ID);
     }
 }

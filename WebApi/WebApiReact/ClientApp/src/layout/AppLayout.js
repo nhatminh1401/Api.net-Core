@@ -10,8 +10,7 @@ const AppLayout = () => {
                 <Sidebar />
                 <Outlet />
             </div>
-            <div style={{ padding: '50px 100px 0px 370px' }}>
-                
+            <div style={{ padding: '50px 100px 0px 370px' }}>                
             </div>
         </>
     );

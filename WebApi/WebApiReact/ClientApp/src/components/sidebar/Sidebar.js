@@ -29,18 +29,18 @@ const sidebarNavItems = [
         to: '/user',
         section: 'user'
     },
+    {
+        display: 'Role',
+        icon: <i className='bx bx-user'></i>,
+        to: '/role',
+        section: 'role'
+    },
     {        
         display: 'Login',
         icon: <i className='bx bx-user'></i>,
         to: '/login',
         section: 'login'
     },
-    // {        
-    //     display: 'Logout',
-    //     icon: <i className='bx bx-user'></i>,
-    //     to: '/logout',
-    //     section: 'logout'
-    // },
 ]
 
 const Sidebar = () => {
@@ -79,13 +79,13 @@ const Sidebar = () => {
                     }}
                 ></div>
                 {
-                    sidebarNavItems.map((item, index) => (
+                    sidebarNavItems.map((item, index) => (                        
                         <Link
                             to={item.to}
                             key={index}
                         >
                             <div className={`sidebar__menu__item ${activeIndex === index ? 'active' : ''}`}>
-                                <div className="sidebar__menu__item__icon">
+                                <div className="sidebar__menu__item__icon">                                  
                                     {item.icon}
                                 </div>
                                 <div className="sidebar__menu__item__text">

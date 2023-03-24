@@ -8,7 +8,7 @@ using WebApi.Models;
 using WebApiCore.Interfaces;
 using WebApiCore.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Controllers
 {
@@ -23,16 +23,8 @@ namespace WebApi.Controllers
             _role = role;
             
         }
-
-        //[HttpGet]
-        ////[Authorize]
-        //public async Task<IEnumerable<Role>> GetUserInfo()
-        //{
-        //    return await _context.Roles.ToListAsync();
-        //}
-
+       
         [HttpGet]
-        
         //[Authorize]
         public async Task<IActionResult> GetRole()
         {
@@ -44,9 +36,40 @@ namespace WebApi.Controllers
             catch(Exception ex)
             {
                 return Ok(ex.Message);
-            }
+            }          
+        }
 
-            
+        [HttpPut]
+        //[Route("UpdateEmployee")]
+        //[Authorize]
+        public async Task<IActionResult> UpdateRole(Role emp)
+        {
+            await _role.UpdateRole(emp);
+            return Ok("Updated Successfully");
+        }
+        [HttpGet]
+        [Route("Get/{Id}")]
+        public async Task<IActionResult> GetRoleByID(int Id)
+        {
+            return Ok(await _role.GetRoleByID(Id));
+        }
+        [HttpPost]
+        [Route("AddRole")]
+        //[Authorize]
+        public async Task<IActionResult> Post(Role role)
+        {
+            var result = await _role.InsertRole(role);
+            if (result.RoleId == 0)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            }
+            return Ok("Added Successfully");
+        }
+        [HttpDelete]
+        public JsonResult DeleteRole(int id)
+        {
+            _role.DeleteRole(id);
+            return new JsonResult("Deleted Successfully");
         }
     }
 }

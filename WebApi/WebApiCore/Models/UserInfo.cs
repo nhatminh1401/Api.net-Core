@@ -23,7 +23,10 @@ namespace WebApiCore.Models
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public DateTime? CreateDate { get; set; }
-        public string Role { get; set; }
-        //public virtual Role? Role { get; set; }
+        //public string? Role { get; set; }
+        public int? RoleId { get; set; }
+        [ForeignKey("RoleId")]
+
+        public virtual Role? Roles { get; set; }
     }
 }

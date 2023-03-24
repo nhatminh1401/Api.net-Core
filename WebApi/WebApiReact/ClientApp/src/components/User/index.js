@@ -14,9 +14,9 @@ const User = () => {
         setShow(isShow);
         //fetchUser();
         const role = sessionStorage.getItem("role");
-        console.log(role);
+        //console.log(role);
         if(!isShow){
-            if (role == '"Admin"'){
+            if (role == "1"){
                 fetchUser();
             }
             else{
@@ -55,7 +55,7 @@ const User = () => {
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>                     
-                            <th>Role</th>               
+                            <th>RoleID</th>               
                             <th colSpan={2}>Action</th>
                         </tr>
                     </thead>
@@ -68,7 +68,7 @@ const User = () => {
                                     <td style={{ maxWidth: '120px' }}>{item.email}</td>
                                     <td style={{ maxWidth: '120px' }}>{item.firstName}</td>
                                     <td style={{ maxWidth: '120px' }}>{item.lastName}</td>     
-                                    <td style={{ maxWidth: '120px' }}>{item.role}</td>
+                                    <td style={{ maxWidth: '120px' }}>{item.roleId}</td>
                                     <td>
                                         <Link
                                             to={`/user/${item.userId}/edit`}

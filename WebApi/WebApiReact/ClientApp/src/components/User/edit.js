@@ -9,55 +9,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import userApi from '../../api/userApi';
 import roleApi from '../../api/roleApi';
-import { getUser } from './../../utils/Common';
 
 function EditUser() {
 
   var { id } = useParams();
   const navigate = useNavigate();
 
-  //const [user, setUser] = useState([]);
   const [role, setUserRole] = useState([]);
   const [user, setEmployee] = useState([]);
+  const [roleId, setRole] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // const fetchData = async () => {
-  //   const user = await userApi.getByIdAsync(id);
-  //   const role = await roleApi.getAllAsync();
-  //   //console.log(role);
-  //   let a = role.values();
-  //   for (const value of a) 
-  //     {
-  //       //const userrole = value.role;
-  //       const usernames = value.roleName;
-  //       const userrolename = value;
-  //       console.log(userrolename);
-  //       //console.log(usernames);
-  //       setUserRole(usernames, userrolename);
-  //     }      
-  //   setUser(user);
-   
-  // }
   const fetchData = async () => {
     const role = await roleApi.getAllAsync()
     setUserRole(role);
     const user = await userApi.getByIdAsync(id)
-    console.log(user);
     setEmployee(user);
+    const ids = user.roleId;
+    const roleId = await roleApi.getByIdAsync(ids);
+    //console.log("gsdfgsd", roleId);
+    setRole(roleId);
   }
-
-  // const options = [
-  //   { value: 'usernames', label: 'Chocolate' },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' }
-  // ]
-  
-  // const MyComponent = () => (
-  //   <Select options={options} />
-  // )
   
   const {   
     register,
@@ -75,6 +50,10 @@ function EditUser() {
     }
   }
 
+  // const handleChange = (e) => {
+  //   set
+  // }
+
   return (
     <>
       <div style={{ padding: '0px 0px 0px 370px' }}>
@@ -87,13 +66,14 @@ function EditUser() {
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>User Name</Form.Label>
               <Form.Control
-                type="text"
+                type={"text"}
+                //onChange = { handleChange}
                 defaultValue={user.userName}
                 {...register('userName')}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
@@ -102,7 +82,7 @@ function EditUser() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>first Name</Form.Label>
               <Form.Control
                 type="text"
@@ -111,7 +91,7 @@ function EditUser() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
@@ -120,7 +100,7 @@ function EditUser() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>PassWord</Form.Label>
               <Form.Control
                 type="password"
@@ -129,7 +109,7 @@ function EditUser() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom06">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 type="password"
@@ -141,16 +121,18 @@ function EditUser() {
            
           </Row>
           <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Group as={Col} md="4" controlId="validationCustom07">
                 <Form.Label>Role</Form.Label>
                 <select
                   className="form-control-alternative form-control"
                   id="input-category"
                   type="select"
                   {...register("roleId")}
-                  defaultValue=""
+                  //value= {roleId.roleId}
+                  value={user.roleName}
                   //onChange={handleChange}
                 >
+                  <option value= {roleId.roleId} >{roleId.roleName} </option>
                   {role.map((roleType, key) => (
                     <option key={key} value={roleType.roleId}>
                       {roleType.roleName}

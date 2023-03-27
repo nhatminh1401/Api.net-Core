@@ -22,6 +22,8 @@ function EditEmployee() {
   const [productTypes, setProductTypes] = useState([]);
 
   const [employee, setEmployee] = useState([]);
+  const [deparmentID, setDepID] = useState([]);
+
   // const [employee, setEmployee] = useState({
   //   employeeName : "",
   //   emailId :'',
@@ -36,8 +38,12 @@ function EditEmployee() {
     const productTypes = await deparmentApi.getAllAsync()
     setProductTypes(productTypes);
     const employee = await employeeApi.getByIdAsync(id)
-    console.log(employee);
+    //console.log(">>>>>>>>>>>",employee);
+    const ids = employee.departmentId;
     setEmployee(employee);
+    const deparmentID = await deparmentApi.getByIdAsync(ids);
+    console.log("!!!!!!", deparmentID);
+    setDepID(deparmentID);
   }
 
   // const handleChange = (e) => {
@@ -57,9 +63,7 @@ function EditEmployee() {
 
   const onSubmit = async (content) => {
     // console.log(typeof(content));
-    console.log(content);
     content.employeeID = id;
-    console.log(content);
     var result = await employeeApi.updateAsync(content);
     if (result !== 0) {
       alert("Da update employee thanh cong");
@@ -101,16 +105,19 @@ function EditEmployee() {
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom04">
                 <Form.Label>Deparment</Form.Label>
+              
                 <select
                   className="form-control-alternative form-control"
                   id="input-category"
                   type="select"
                   {...register("departmentId")}
-                  //defaultValue={departmentName}
+                  value={employee.departmentId}
                   //onChange={handleChange}
                 >
-                  {productTypes.map((productType, key) => (
+                  {/* <option value = {deparmentID.departmentId} > { deparmentID.departmentName}</option> */}
+                  {productTypes.map((productType, key ) => (
                     <option key={key} value={productType.departmentId}>
+                      
                       {productType.departmentName}
                     </option>
                   ))}

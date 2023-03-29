@@ -37,7 +37,7 @@ namespace WebApi.Controllers
             _userService = userService;
         }
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IEnumerable<UserInfo>> GetUserInfo()
         {
             return await _context.UsersInfo.ToListAsync();
@@ -114,7 +114,7 @@ namespace WebApi.Controllers
 
         [HttpPut]
         [Route("UpdateUser")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Put(UserInfo userInfo)
         {
             await _userTokenService.UpdateUserInfo(userInfo);
@@ -122,14 +122,14 @@ namespace WebApi.Controllers
         }
         [HttpGet]
         [Route("{Id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetEmpByID(int Id)
         {
             return Ok(await _userTokenService.GetUserByID(Id));
         }
         [HttpDelete]
         [Route("DeleteUser")]
-        [Authorize]
+        //[Authorize]
         //[HttpDelete("{id}")]  
         public JsonResult Delete(int id)
         {

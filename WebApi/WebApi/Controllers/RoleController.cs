@@ -66,6 +66,7 @@ namespace WebApi.Controllers
             return Ok("Added Successfully");
         }
         [HttpDelete]
+        //[Route("Delete/{ID}")]
         public JsonResult DeleteRole(int id)
         {
             _role.DeleteRole(id);

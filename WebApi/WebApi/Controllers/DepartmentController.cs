@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
+using WebApi.Repository;
+using WebApiCore.Paging;
 
 namespace WebApi.Controllers
 {
@@ -21,47 +23,72 @@ namespace WebApi.Controllers
                     throw new ArgumentNullException(nameof(department));
             }
             [HttpGet]
-            [Route("GetDepartment")]
-            [Authorize]
-            public async Task<IActionResult> Get()
+            //[Route("GetDepartment")]
+            //[Authorize]
+            public async Task<IActionResult> Get([FromQuery] PagingParameters pagingParameters)
             {
-                return Ok(await _department.GetDepartment());
+                return Ok(await _department.GetDepartments(pagingParameters));    
+                //return Ok(await _department.GetDepartment());
             }
             [HttpGet]
-            [Authorize]
-            [Route("GetDepartmentByID/{Id}")]
-            public async Task<IActionResult> GetDeptById(int Id)
+            //[Authorize]
+            [Route("GetDepartmentByID/{id}")]
+            public ActionResult GetDeparmnetById(int id)
             {
-                return Ok(await _department.GetDepartmentByID(Id));
+                var dep = _department.GetDepartment(id);
+                if (dep == null)
+                {
+                    return NotFound();
+                }
+                return Ok(dep);
             }
             [HttpPost]
             [Route("AddDepartment")]
-            [Authorize]
-            public async Task<IActionResult> Post(Department dep)
+            //[Authorize]
+            public ActionResult<Department> CreateDepartment([FromBody] Department dep)
             {
-                var result = await _department.InsertDepartment(dep);
-                if (result.DepartmentId == 0)
+                if (dep == null)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+                    return BadRequest("Department object is null");
                 }
-                return Ok("Added Successfully");
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                _department.CreateDepartment(dep);
+                return Ok(CreatedAtRoute("deparmentId", new { id = dep.DepartmentId }, dep));
             }
             [HttpPut]
-            [Authorize]
-            [Route("UpdateDepartment")]
-            public async Task<IActionResult> Put(Department dep)
+            //[Authorize]
+            //[Route("UpdateDepartment")]
+            public IActionResult UpdateDepartment([FromBody] Department dep)
             {
-                await _department.UpdateDepartment(dep);
+                if (dep == null)
+                {
+                    return BadRequest("Department object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                _department.UpdateDepartment(dep);
                 return Ok("Updated Successfully");
+                //return NoContent();
+
             }
             [HttpDelete]
             //[HttpDelete("{id}")]
-            [Route("DeleteDepartment")]
-            [Authorize]
-            public JsonResult Delete(int id)
+            //[Route("DeleteDepartment")]
+            //[Authorize]
+            public IActionResult DeleteEmployee(int id)
             {
-                _department.DeleteDepartment(id);
-                return new JsonResult("Deleted Successfully");
+                var db = _department.GetDepartment(id);
+                if (!db.DepartmentId.Equals(id))
+                {
+                    return NotFound(db.DepartmentId);
+                }
+                _department.DeleteDepartment(db);
+                return Ok("Delete Successfully");
             }
     }
 }

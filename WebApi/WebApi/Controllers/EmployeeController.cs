@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
+using WebApiCore.Models;
 using WebApiCore.Paging;
 
 namespace WebApi.Controllers
@@ -46,8 +47,8 @@ namespace WebApi.Controllers
             _employeeRepository.Create(employee);
             return Ok(CreatedAtRoute("employeeId", new { id = employee.EmployeeID }, employee));
         }
-        [HttpPut("{id}")]
-        public IActionResult UpdateEmployee(int id, [FromBody] Employee employee)
+        [HttpPut]
+        public IActionResult UpdateEmployee([FromBody] Employee employee)
         {
             if (employee == null)
             {
@@ -57,14 +58,17 @@ namespace WebApi.Controllers
             {
                 return BadRequest("Invalid model object");
             }
-            var db = _employeeRepository.GetEmployee(id);
-            if (!db.EmployeeID.Equals(id))
-            {
-                return NotFound(db.EmployeeID);
-            }
+            //    var db = _employeeRepository.GetEmployee(id);
+            //    if (!db.EmployeeID.Equals(id))
+            //    {
+            //        return NotFound(db.EmployeeID);
+            //    }
             _employeeRepository.Update(employee);
-            return NoContent();
+            return Ok("Updated Successfully");
+            //return NoContent();
+
         }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteEmployee(int id)
         {          
@@ -74,7 +78,7 @@ namespace WebApi.Controllers
                 return NotFound(db.EmployeeID);
             }
             _employeeRepository.DeleteEmployee(db);
-            return NoContent();
+            return Ok("Delete Successfully");
         }
     }
     //{

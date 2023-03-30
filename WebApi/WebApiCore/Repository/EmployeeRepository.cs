@@ -42,9 +42,21 @@ namespace WebApi.Repository
             return FindbyCondition (e => e.EmployeeID == id).FirstOrDefault();
         }
 
-        public Task<PagedList<Employee>> GetEmployees(PagingParameters pagingParameters)
+        public Task<object> GetEmployees(PagingParameters pagingParameters)
         {
-            return Task.FromResult(PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID), pagingParameters.PageNumber,pagingParameters.PageSize));
+            var employees = PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID), pagingParameters.PageNumber, pagingParameters.PageSize);
+            //int count = temp.TotalCount;
+            Object t = new
+            {
+                employees.CurrentPage,
+                employees.TotalPage,
+                employees.TotalCount,
+                employees.PageSize,
+                employees.HasPrevious,
+                employees.HasNext,
+                Data = employees
+            };
+            return Task.FromResult(t) ;
         }
 
 

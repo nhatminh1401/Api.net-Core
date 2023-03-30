@@ -17,7 +17,7 @@ namespace WebApi.IRepository
         //Task<Employee> InsertEmployee(Employee objEmployee);
         //Task<Employee> UpdateEmployee(Employee objEmployee);
         //bool DeleteEmployee(int ID);
-        Task<PagedList<Employee>> GetEmployees(PagingParameters pagingParameters);
+        Task<object> GetEmployees(PagingParameters pagingParameters);
         Employee GetEmployee(int id);
         void CreateEmployee (Employee employee);
         void UpdateEmployee (Employee employee);

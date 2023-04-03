@@ -17,12 +17,11 @@ namespace WebApi.IRepository
         //Task<Employee> InsertEmployee(Employee objEmployee);
         //Task<Employee> UpdateEmployee(Employee objEmployee);
         //bool DeleteEmployee(int ID);
-        Task<object> GetEmployees(PagingParameters pagingParameters);
+        Task<object> GetEmployees(PagingParameters pagingParameters, string search);
         Employee GetEmployee(int id);
         void CreateEmployee (Employee employee);
         void UpdateEmployee (Employee employee);
         void DeleteEmployee (Employee employee);
-
-
+        Task<IEnumerable<Employee>> Search(string name);
     }
 }

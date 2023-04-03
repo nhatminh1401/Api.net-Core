@@ -21,7 +21,12 @@ namespace WebApi.Repository
 {
     public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(APIDbContext context) : base(context) { }
+        public EmployeeRepository(APIDbContext context) : base(context) 
+        {
+
+        }
+        //private readonly APIDbContext _apiDBContext;
+        
 
         public void CreateEmployee(Employee employee)
         {
@@ -42,22 +47,73 @@ namespace WebApi.Repository
             return FindbyCondition (e => e.EmployeeID == id).FirstOrDefault();
         }
 
-        public Task<object> GetEmployees(PagingParameters pagingParameters)
+        public async Task<IEnumerable<Employee>> Search(string name)
         {
-            var employees = PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID), pagingParameters.PageNumber, pagingParameters.PageSize);
-            //int count = temp.TotalCount;
-            Object t = new
+            IQueryable<Employee> query = ReposistoryContext.Employees;
+            if (!string.IsNullOrEmpty(name))
             {
-                employees.CurrentPage,
-                employees.TotalPage,
-                employees.TotalCount,
-                employees.PageSize,
-                employees.HasPrevious,
-                employees.HasNext,
-                Data = employees
-            };
-            return Task.FromResult(t) ;
+                query = query.Where(e => e.EmployeeName.Contains(name) || e.EmailId.Contains(name));
+            }          
+            return await query.ToListAsync();
+           
         }
+
+        public Task<object> GetEmployees(PagingParameters pagingParameters, string search)
+        {
+            //if(c == "employeeName")
+            //{
+            //    var employees = PagedList<Employee>.GetPagedList(FindAll().OrderByDescending(e => e.EmployeeName), 
+            //        pagingParameters.PageNumber, pagingParameters.PageSize);
+            //    Object t = new
+            //    {
+            //        employees.CurrentPage,
+            //        employees.TotalPage,
+            //        employees.TotalCount,
+            //        employees.PageSize,
+            //        employees.HasPrevious,
+            //        employees.HasNext,
+            //        Data = employees
+            //    };
+            //    return Task.FromResult(t);
+            //}
+            if (search == null)
+            { 
+                var employees = PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID), 
+                    pagingParameters.PageNumber, pagingParameters.PageSize);
+                //int count = temp.TotalCount;
+                Object t = new
+                {
+                    employees.CurrentPage,
+                    employees.TotalPage,
+                    employees.TotalCount,
+                    employees.PageSize,
+                    employees.HasPrevious,
+                    employees.HasNext,
+                    Data = employees
+                };
+                return Task.FromResult(t) ;
+            }
+            else
+            {
+                var employees = PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID).
+                    Where(e => e.EmailId.Contains(search) || e.EmployeeName.Contains(search)), pagingParameters.PageNumber, pagingParameters.PageSize);
+                //int count = temp.TotalCount;
+                Object t = new
+                {
+                    employees.CurrentPage,
+                    employees.TotalPage,
+                    employees.TotalCount,
+                    employees.PageSize,
+                    employees.HasPrevious,
+                    employees.HasNext,
+                    Data = employees
+                };
+                return Task.FromResult(t);
+            }
+            
+        }
+
+       
 
 
 

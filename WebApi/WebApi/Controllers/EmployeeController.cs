@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Reflection;
+using System;
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
+using WebApi.Repository;
 using WebApiCore.Models;
 using WebApiCore.Paging;
+using System.Linq;
 
 namespace WebApi.Controllers
 {
@@ -17,9 +23,9 @@ namespace WebApi.Controllers
             _employeeRepository = employeeRepository;
         }
         [HttpGet]
-        public async Task<ActionResult> GetEmployees([FromQuery] PagingParameters pagingParameters)
+        public async Task<ActionResult> GetEmployees([FromQuery] PagingParameters pagingParameters, string search)
         {
-            return Ok( await _employeeRepository.GetEmployees(pagingParameters));
+            return Ok( await _employeeRepository.GetEmployees(pagingParameters,search));
         }
         [HttpGet]
         [Route("GetEmployeeByID/{id}")]
@@ -32,6 +38,25 @@ namespace WebApi.Controllers
                 return NotFound();
             }
             return Ok(employee);
+        }
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<Employee>>> Search(string name)
+        {
+            try
+            {
+                var result = await _employeeRepository.Search(name);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
         [HttpPost]
         public ActionResult<Employee> CreateEmployee([FromBody] Employee employee) 

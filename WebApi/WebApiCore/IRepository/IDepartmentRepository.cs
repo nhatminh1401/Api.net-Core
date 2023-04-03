@@ -12,7 +12,7 @@ namespace WebApi.IRepository
         //Task<Department> InsertDepartment(Department objDepartment);
         //Task<Department> UpdateDepartment(Department objDepartment);
         //bool DeleteDepartment(int ID);
-        Task<object> GetDepartments(PagingParameters pagingParameters);
+        Task<object> GetDepartments(PagingParameters pagingParameters, string search);
         Department GetDepartment(int id);
         void CreateDepartment(Department department);
         void UpdateDepartment(Department department);

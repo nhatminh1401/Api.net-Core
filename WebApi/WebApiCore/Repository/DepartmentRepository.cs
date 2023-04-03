@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using WebApi.IRepository;
 using WebApi.Models;
@@ -30,21 +34,42 @@ namespace WebApi.Repository
             return FindbyCondition(e => e.DepartmentId == id).FirstOrDefault();
         }
 
-        public Task<object> GetDepartments(PagingParameters pagingParameters)
+        public Task<object> GetDepartments(PagingParameters pagingParameters, string search)
         {
-            var deparments = PagedList<Department>.GetPagedList(FindAll().OrderBy(s => s.DepartmentId), pagingParameters.PageNumber, pagingParameters.PageSize);
-            //int count = temp.TotalCount;
-            Object t = new
+            if (search == null)
             {
-                deparments.CurrentPage,
-                deparments.TotalPage,
-                deparments.TotalCount,
-                deparments.PageSize,
-                deparments.HasPrevious,
-                deparments.HasNext,
-                Data = deparments
-            };
-            return Task.FromResult(t);
+                var deparments = PagedList<Department>.GetPagedList(FindAll(), pagingParameters.PageNumber, pagingParameters.PageSize);
+                //int count = temp.TotalCount;
+                Object t = new
+                {
+                    deparments.CurrentPage,
+                    deparments.OrderBy,
+                    deparments.TotalPage,
+                    deparments.TotalCount,
+                    deparments.PageSize,
+                    deparments.HasPrevious,
+                    deparments.HasNext,
+                    Data = deparments
+                };
+                return Task.FromResult(t);
+            }
+            else
+            {
+                var deparments = PagedList<Department>.GetPagedList(FindAll().OrderBy(s => s.DepartmentId).Where(s => s.DepartmentName.Contains(search)), pagingParameters.PageNumber, pagingParameters.PageSize);
+                //int count = temp.TotalCount;
+                Object t = new
+                {
+                    deparments.CurrentPage,
+                    deparments.OrderBy,
+                    deparments.TotalPage,
+                    deparments.TotalCount,
+                    deparments.PageSize,
+                    deparments.HasPrevious,
+                    deparments.HasNext,
+                    Data = deparments
+                };
+                return Task.FromResult(t);
+            }
         }
 
         public void UpdateDepartment(Department department)

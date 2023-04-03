@@ -22,6 +22,6 @@ namespace WebApiCore.Paging
                 _pageSize = (value > maxPageSize) ? maxPageSize : value; 
             }
         }
-        //public string OrderBy { get; set; }
+        public string OrderBy { get; set; }
     }
 }

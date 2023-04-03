@@ -38,7 +38,7 @@ namespace WebApi.Repository
         {
             if (search == null)
             {
-                var deparments = PagedList<Department>.GetPagedList(FindAll(), pagingParameters.PageNumber, pagingParameters.PageSize);
+                var deparments = PagedList<Department>.GetPagedList(FindAll(), pagingParameters.PageNumber, pagingParameters.PageSize, pagingParameters.OrderBy);
                 //int count = temp.TotalCount;
                 Object t = new
                 {

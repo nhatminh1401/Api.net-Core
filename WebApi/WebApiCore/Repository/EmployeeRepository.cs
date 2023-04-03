@@ -60,30 +60,15 @@ namespace WebApi.Repository
 
         public Task<object> GetEmployees(PagingParameters pagingParameters, string search)
         {
-            //if(c == "employeeName")
-            //{
-            //    var employees = PagedList<Employee>.GetPagedList(FindAll().OrderByDescending(e => e.EmployeeName), 
-            //        pagingParameters.PageNumber, pagingParameters.PageSize);
-            //    Object t = new
-            //    {
-            //        employees.CurrentPage,
-            //        employees.TotalPage,
-            //        employees.TotalCount,
-            //        employees.PageSize,
-            //        employees.HasPrevious,
-            //        employees.HasNext,
-            //        Data = employees
-            //    };
-            //    return Task.FromResult(t);
-            //}
             if (search == null)
             { 
                 var employees = PagedList<Employee>.GetPagedList(FindAll().OrderBy(s => s.EmployeeID), 
-                    pagingParameters.PageNumber, pagingParameters.PageSize);
+                    pagingParameters.PageNumber, pagingParameters.PageSize, pagingParameters.OrderBy);
                 //int count = temp.TotalCount;
                 Object t = new
                 {
                     employees.CurrentPage,
+                    employees.OrderBy,
                     employees.TotalPage,
                     employees.TotalCount,
                     employees.PageSize,

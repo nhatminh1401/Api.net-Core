@@ -24,12 +24,12 @@ namespace WebApiCore.Paging
             TotalPage = (int)Math.Ceiling(count / (double)pageSize);
             AddRange(item);
         }
-        public static PagedList<T> GetPagedList(IQueryable<T> source, int pageNumber, int pageSize, string orderBy = "departmentName")
+        public static PagedList<T> GetPagedList(IQueryable<T> source, int pageNumber, int pageSize, string orderBy = "")
         {
             var count = source.Count();
             Sorting<T>.ApplySort(ref source, orderBy);
             var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            return new PagedList<T>(items, count, pageNumber, pageSize, orderBy);
+            return new PagedList<T>(items, count, pageSize, pageNumber, orderBy);
         }
     }
 }

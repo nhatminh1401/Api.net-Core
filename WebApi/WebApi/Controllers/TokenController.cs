@@ -50,10 +50,10 @@ namespace WebApi.Controllers
                 if (_userData != null && _userData.Email != null && _userData.Password != null)
                 {
                     var user = await GetUser(_userData.Email, _userData.Password);
-                    //if (user == null)
-                    //{
-                    //    return NotFound("User pass khong hop le");
-                    //}
+                    if (user == null)
+                    {
+                        return NotFound("Email hoặc pass không đúng! Kiểm tra lại.");
+                    }
                     var result = _userTokenService.GetUsersInfoAsync(_userData.Email);
                     var jwtTokenHandler = new JwtSecurityTokenHandler();
                     var secreKeyBytes = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);

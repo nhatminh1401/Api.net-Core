@@ -63,8 +63,10 @@ function Login(props) {
       }
     }).catch(error => {
       setLoading(false);
-      if (error.response.status === 401) setError(error.response.data.message);
+      if (error.response.status === 401) setError(error.response.data);
       else setError("Something went wrong. Please try again later.");
+      alert(error.response.data);
+      console.log(error.response.data,"abc");
     });
   }
 
@@ -76,10 +78,10 @@ function Login(props) {
     const onSubmit = async (content) => {
       var data = await userApi.addAsync(content);
       console.log(data)
-      if (data !== "") {
-          alert("Da tao thanh cong!");
-          //navigate(-1);
-      }
+      // if (data !== "") {
+      //     alert("Da tao thanh cong!");
+      //     //navigate(-1);
+      // }
     }
   const [justifyActive, setJustifyActive] = useState('tab1');;
 

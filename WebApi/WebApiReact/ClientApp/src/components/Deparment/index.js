@@ -13,7 +13,7 @@ const Deparment = () => {
 
     const fetchDeparment = async () => {
         const result = await departmentApi.getAllAsync();
-        setDeparment(result);
+        setDeparment(result.data);
     };
 
     useEffect(() => {

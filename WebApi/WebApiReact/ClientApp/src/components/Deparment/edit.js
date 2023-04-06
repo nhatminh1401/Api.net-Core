@@ -23,6 +23,7 @@ function EditDeparment() {
   const fetchData = async () => {
     const deparment = await deparmentApi.getByIdAsync(id)
     setDeparment(deparment);
+    console.log (deparment, "!!!!");
   }
 
   const {
@@ -34,7 +35,7 @@ function EditDeparment() {
   const onSubmit = async (content) => {
     content.departmentId = id
     var result = await deparmentApi.updateAsync(content);
-    console.log(result);
+    console.log(result.data);
     if(result !== 0) {
       alert("Da update deparment pham thanh cong!");
       navigate(-1);

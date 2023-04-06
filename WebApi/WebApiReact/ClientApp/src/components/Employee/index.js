@@ -37,7 +37,8 @@ const Employee = () => {
     const fetchEmployee = async () => {
         
         const result = await employeeApi.getAllAsync();
-        setEmployee(result);
+        setEmployee(result.data);
+        console.log("1111", result.data);
     }
     const deleteEmployee = async (id) => {
         const result = await employeeApi.deleteAsync(id)

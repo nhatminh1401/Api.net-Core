@@ -40,7 +40,7 @@ function Login(props) {
     setError(null);
     setLoading(true);
     
-    const url = "https://localhost:5001/api/Token";
+    const url = "https://localhost:5050/api/Token";
     
     axios.post(url,{ email: email.value, password: password.value  }).then(response => {
       setLoading(false);

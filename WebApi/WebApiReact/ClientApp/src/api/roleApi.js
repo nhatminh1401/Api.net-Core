@@ -10,16 +10,16 @@ const roleApi = {
             console.error(error);
         }
     },
-    // postAsync: async (content) => {
-    //     try{
-    //         const result = await API.post(`/api/Token`, content);
-    //         return result;
-    //     }
-    //     catch (error)
-    //     {
-    //         console.log(error);
-    //     }
-    // },
+     postAsync: async (content) => {
+         try{
+             const result = await API.post(`/api/Token`, content);
+             return result;
+         }
+         catch (error)
+         {
+             console.log(error);
+         }
+     },
     getAllAsync: async () => {
         try {
             const result = await API.get(`/api/Role`);

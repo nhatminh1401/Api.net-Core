@@ -1,7 +1,7 @@
 import API from "./API";
 import { END_POINT } from "./endPoint";
 
-const url = "/api/Employee/GetEmployee";
+const url = "/api/Employee";
 
 const employeeApi = {
     getAllAsync: async () => {
@@ -23,7 +23,7 @@ const employeeApi = {
     },
     addAsync: async (content) => {
         try {
-            const result = await API.post(`/api/Employee/AddEmployee`, content);
+            const result = await API.post(`/api/Employee`, content);
             return result;
         } catch (error) {
             console.error(error);
@@ -31,7 +31,7 @@ const employeeApi = {
     },
     deleteAsync: async (employeeID) => {
         try {
-            const result = await API.delete(`/api/Employee/DeleteEmployee?id=${employeeID}`);
+            const result = await API.delete(`/api/Employee/${employeeID}`);
             return result;
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ const employeeApi = {
     },
     updateAsync: async (content) => {
         try {
-            const result = await API.put(`/api/Employee/UpdateEmployee`, content);
+            const result = await API.put(`/api/Employee`, content);
             return result;
         } catch (error) {
             console.log(error)

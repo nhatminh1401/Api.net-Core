@@ -6,7 +6,7 @@ const url = "/api/Department/GetDepartment";
 const deparmentApi = {
     getAllAsync: async () => {
         try {
-            const result = await API.get(`/api/Department/GetDepartment`);
+            const result = await API.get(`/api/Department`);
             return result;
         } catch (error) {
             console.error(error);
@@ -31,7 +31,7 @@ const deparmentApi = {
     },
     deleteAsync: async (departmentId) => {
         try {
-            const result = await API.delete(`/api/Department/DeleteDepartment?id=${departmentId}`);
+            const result = await API.delete(`/api/Department/${departmentId}`);
             return result;
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ const deparmentApi = {
     },
     updateAsync: async (content, departmentId) => {
         try {
-            const result = await API.put(`/api/Department/UpdateDepartment`, content, departmentId);
+            const result = await API.put(`/api/Department`, content, departmentId);
             return result;
         } catch (error) {
             console.log(error)

@@ -36,14 +36,14 @@ function EditEmployee() {
 
   const fetchData = async () => {
     const productTypes = await deparmentApi.getAllAsync()
-    setProductTypes(productTypes);
+    setProductTypes(productTypes.data);
     const employee = await employeeApi.getByIdAsync(id)
     //console.log(">>>>>>>>>>>",employee);
     const ids = employee.departmentId;
     setEmployee(employee);
     const deparmentID = await deparmentApi.getByIdAsync(ids);
     console.log("!!!!!!", deparmentID);
-    setDepID(deparmentID);
+    setDepID(deparmentID.data);
   }
 
   // const handleChange = (e) => {
